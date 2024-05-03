@@ -37,8 +37,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
     var img = await filterImageFromURL(req.query.image_url);
     if(img){
-      //await deleteLocalFiles(img);
-      res.status(200);
+      // await deleteLocalFiles(img);
+      res.status(200).send("Image uploaded");
     } else {
       res.status(500).send('Image upload fail.');
     }
