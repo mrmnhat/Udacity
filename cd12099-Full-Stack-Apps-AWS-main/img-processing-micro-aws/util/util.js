@@ -33,8 +33,16 @@ import Jimp from "jimp";
 // useful to cleanup after tasks
 // INPUTS
 //    files: Array<string> an array of absolute paths to files
- export async function deleteLocalFiles(files) {
+ export function deleteLocalFiles(files) {
   for (let file of files) {
-    fs.unlinkSync(file);
+    fs.unlinkSync("/tmp/" + file);
   }
+}
+
+export function getAllfiles(){
+  var files = [];
+  fs.readdirSync("/tmp/").forEach(file => {
+      files.push(file);
+  });
+  return files;
 }

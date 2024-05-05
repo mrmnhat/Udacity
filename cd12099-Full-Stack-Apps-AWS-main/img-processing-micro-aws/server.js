@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
+import {filterImageFromURL, deleteLocalFiles, getAllfiles} from './util/util.js';
 
 
 
@@ -37,8 +37,15 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
     var img = await filterImageFromURL(req.query.image_url);
     if(img){
-      // await deleteLocalFiles(img);
-      res.status(200).send("Image uploaded");
+      var existsFiles = await getAllfiles();
+      res.sendFile(img, function(err){
+        if(err){
+          res.status(500).send(err);
+        } 
+        deleteLocalFiles(existsFiles);
+        
+      });
+      
     } else {
       res.status(500).send('Image upload fail.');
     }
